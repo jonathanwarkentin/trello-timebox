@@ -39,5 +39,5 @@ def get_cards(board_id):
 
 if __name__ == "__main__":
     username = os.getenv('USERNAME')
-    get_boards(username)
-    get_cards('5bbe7f8af2edd68b5b21161a')
+    # get_boards(username)
+    get_cards(os.getenv('BOARD_ID'))
