@@ -32,11 +32,13 @@ def get_cards(board_id):
         key=lambda card: datetime.strptime(card['due'], '%Y-%m-%dT%H:%M:%S.%fZ'), reverse=False
     )
 
-    for i in range(len(sorted_tasks)):
-        print(sorted_tasks[i]['name'] + ' - DUE: ' + datetime.strptime(sorted_tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime("%c"))
-        print(sorted_tasks[i]['customFieldItems'])
-
     return sorted_tasks
+
+
+def print_cards(tasks):
+    for i in range(len(tasks)):
+        print(tasks[i]['name'] + ' - DUE: ' + datetime.strptime(tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime("%c"))
+        print(tasks[i]['customFieldItems'])
 
 
 def get_cards_for_days(tasks, days):
@@ -45,6 +47,21 @@ def get_cards_for_days(tasks, days):
     return relevant_cards
 
 
+def get_total_time_estimate(tasks):
+    total = 0
+    hours = 0
+    minutes = 0
+    for task in tasks:
+        time_est = next(field for field in task['customFieldItems'] if field['idCustomField'] == '5deac74aa387e46d08bf6520')
+        time_est = time_est['value']['number']
+        total += int(time_est)
+    hours = total / 60
+    minutes = total % 60
+    print('Total time for ' + str(len(tasks)) + ' tasks: ' + str(hours) + ' hours ' + str(minutes) + ' minutes')
+    return total
+
+
 if __name__ == "__main__":
     username = os.getenv('USERNAME')
     cards = get_cards(os.getenv('BOARD_ID'))
+    get_total_time_estimate(get_cards_for_days(cards, 7))
