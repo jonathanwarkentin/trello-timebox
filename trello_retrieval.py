@@ -1,6 +1,6 @@
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 api_key = os.getenv('API_KEY')
@@ -36,8 +36,15 @@ def get_cards(board_id):
     for i in range(len(sorted_tasks)):
         print(sorted_tasks[i]['name'] + ' - DUE: ' + datetime.strptime(sorted_tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime("%c"))
 
+    return sorted_tasks
+
+
+def get_cards_for_days(tasks, days):
+    limit = datetime.now() + timedelta(days=days)
+    relevant_cards = list(filter(lambda card: datetime.strptime(card['due'], '%Y-%m-%dT%H:%M:%S.%fZ') <= limit, tasks))
+    return relevant_cards
+
 
 if __name__ == "__main__":
     username = os.getenv('USERNAME')
-    # get_boards(username)
-    get_cards(os.getenv('BOARD_ID'))
+    cards = get_cards(os.getenv('BOARD_ID'))
