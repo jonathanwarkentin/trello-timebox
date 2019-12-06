@@ -22,7 +22,7 @@ def get_boards(member_id):
 def get_cards(board_id):
     # req = 'boards/' + board_id + '/cards'
     url = 'https://api.trello.com/1/board/' + board_id + '/cards'
-    querystring = {"fields":"name,due","members":"false","key":api_key,"token":token}
+    querystring = {"fields":"name,due","members":"false","customFieldItems":"true","key":api_key,"token":token}
     response = requests.request("GET", url, params=querystring)
     all_cards = json.loads(response.text)
     # print(all_cards)
@@ -32,9 +32,9 @@ def get_cards(board_id):
         key=lambda card: datetime.strptime(card['due'], '%Y-%m-%dT%H:%M:%S.%fZ'), reverse=False
     )
 
-    # print(due_cards)
     for i in range(len(sorted_tasks)):
         print(sorted_tasks[i]['name'] + ' - DUE: ' + datetime.strptime(sorted_tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime("%c"))
+        print(sorted_tasks[i]['customFieldItems'])
 
     return sorted_tasks
 
