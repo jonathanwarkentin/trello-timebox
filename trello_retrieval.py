@@ -12,6 +12,7 @@ credentials = 'key=[[' + api_key + ']]&token=[[' + token
 request_template = """https://api.trello.com/1/{}&""" + credentials
 time_est_field_id = os.getenv('TIME_EST_FIELD')
 timezone_offset = int(os.getenv('TIMEZONE_OFFSET'))
+time_format = '%a %b %#d %Y %#I:%M %p'
 
 
 # Get user boards
@@ -49,7 +50,7 @@ def print_cards(tasks):
     for i in range(len(tasks)):
         print(tasks[i]['name'])
         due_date = datetime.strptime(tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ')
-        print('DUE: ' + (due_date + timedelta(hours=timezone_offset)).strftime("%a %b %#d %Y %#I:%M %p"))
+        print('DUE: ' + (due_date + timedelta(hours=timezone_offset)).strftime(time_format))
         time_est = get_time_estimate(tasks[i])
         hours = time_est / 60
         if hours < 1:
@@ -89,11 +90,11 @@ def get_total_time_estimate(tasks):
 
 # CLI accessible functions
 def get_tasks_for_days(days):
-    print('Getting all tasks for next ' + days + ' days...')
+    print('Getting all tasks for the next ' + days + ' days...')
     cards = get_cards(os.getenv('BOARD_ID'))
     incoming_cards = get_cards_for_days(cards, int(days))
     print_cards(sort_cards(incoming_cards))
-    print('For next ' + days + ' days:')
+    print('For the next ' + days + ' days (until ' + (datetime.now() + timedelta(days=int(days))).strftime(time_format) + '):')
     get_total_time_estimate(incoming_cards)
 
 
