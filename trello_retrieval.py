@@ -87,7 +87,7 @@ def get_total_time_estimate(tasks):
 
 # CLI accessible functions
 def get_tasks_for_days(days):
-    print('Getting all tasks for next " + days + "days...')
+    print('Getting all tasks for next ' + days + ' days...')
     cards = get_cards(os.getenv('BOARD_ID'))
     incoming_cards = get_cards_for_days(cards, int(days))
     print_cards(sort_cards(incoming_cards))
