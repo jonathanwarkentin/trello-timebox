@@ -11,6 +11,7 @@ token = os.getenv('TOKEN')
 credentials = 'key=[[' + api_key + ']]&token=[[' + token
 request_template = """https://api.trello.com/1/{}&""" + credentials
 time_est_field_id = os.getenv('TIME_EST_FIELD')
+timezone_offset = int(os.getenv('TIMEZONE_OFFSET'))
 
 
 # Get user boards
@@ -47,7 +48,8 @@ def print_cards(tasks):
     print()
     for i in range(len(tasks)):
         print(tasks[i]['name'])
-        print('DUE: ' + datetime.strptime(tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime("%c") + ' UTC')
+        due_date = datetime.strptime(tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ')
+        print('DUE: ' + (due_date + timedelta(hours=timezone_offset)).strftime("%c"))
         time_est = get_time_estimate(tasks[i])
         hours = time_est / 60
         if hours < 1:

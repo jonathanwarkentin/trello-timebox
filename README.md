@@ -18,6 +18,7 @@ ___
    * TOKEN (also obtained from Trello API signup)
    * BOARD_ID (the board you want to get cards from)
    * TIME_EST_FIELD (ID of the Custom Field (of type "number") you create in your Trello board using the Custom Fields Power-Up for entry of time estimate in minutes; this setup will be made easier in the future - for now see Trello API docs on how to make a request for your Custom Fields, then find the ID in the JSON response)
+   * TIMEZONE_OFFSET (difference in hours between your timezone and UTC - can be positive or negative)
  - Run `python timebox.py` to get all cards from the specified board, or run `python timebox.py days` , replacing "days" with the integer of your choice to get only the cards with due dates within that many days from the present.
  - For maximum convenience, make timebox.py executable (follow OS-specific docs instructions) and add the trello-timebox directory to your user or system PATH variable. If you do so properly, you should be able to simply run `timebox` or `timebox days` from any directory to run the above commmands, respectively. Simplifying this process will be a primary focus in future work on distribution, along with time estimate field setup.
 
