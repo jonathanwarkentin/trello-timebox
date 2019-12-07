@@ -1,3 +1,5 @@
+import sys
+
 import requests
 import json
 from datetime import datetime, timedelta
@@ -63,7 +65,10 @@ def get_cards_for_days(tasks, days):
 
 
 def get_time_estimate(task):
-    return int(next(field for field in task['customFieldItems'] if field['idCustomField'] == time_est_field_id)['value']['number'])
+    if len(task['customFieldItems']) > 0:
+        return int(next(field for field in task['customFieldItems'] if field['idCustomField'] == time_est_field_id)['value']['number'])
+    else:
+        return 0
 
 
 def get_total_time_estimate(tasks):
@@ -79,9 +84,18 @@ def get_total_time_estimate(tasks):
     return total
 
 
-if __name__ == "__main__":
-    username = os.getenv('USERNAME')
+# CLI accessible functions
+def get_tasks_for_days(days):
     cards = get_cards(os.getenv('BOARD_ID'))
-    incoming_cards = get_cards_for_days(cards, 4)
+    incoming_cards = get_cards_for_days(cards, int(days))
     print_cards(sort_cards(incoming_cards))
     get_total_time_estimate(incoming_cards)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) > 2:
+        globals()[sys.argv[1]](sys.argv[2])
+    else:
+        cards = get_cards(os.getenv('BOARD_ID'))
+        print_cards(sort_cards(cards))
+        get_total_time_estimate(cards)
