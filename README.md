@@ -7,9 +7,11 @@ In turn, trello-timebox will sort the tasks by urgency and schedules time to com
 The script trello_retrieval.py (specifically the function get_cards, provided API and user credentials) gets all cards on a Trello user's board and sorts them by due date (the benefit of which is it sorts together cards from all lists rather than within each list).
 The function get_tasks_for_days will get all cards with due dates in the next x days, print them all with due dates and time estimates.
 
-The timebox.py is presently purely for interaction with trello_retrieval.py, and calendar_scheduling.py, currently in development, will be used for interaction with Google Calendar.
+timebox.py is presently purely for command-line interaction with trello_retrieval.py, and calendar_scheduling.py, currently in development, will be used for interaction with Google Calendar.
 
-To Run:
+___
+
+### To Run:
  - Set the following environment variables
    * USERNAME (Trello User ID)
    * API_KEY (obtained from Trello API signup)
@@ -17,7 +19,9 @@ To Run:
    * BOARD_ID (the board you want to get cards from)
    * TIME_EST_FIELD (ID of the Custom Field (of type "number") you create in your Trello board using the Custom Fields Power-Up for entry of time estimate in minutes; this setup will be made easier in the future - for now see Trello API docs on how to make a request for your Custom Fields, then find the ID in the JSON response)
  - Run `python timebox.py` to get all cards from the specified board, or run `python timebox.py days` , replacing "days" with the integer of your choice to get only the cards with due dates within that many days from the present.
- - For maximum convenience, make timebox.py executable (follow OS-specific docs instructions) and add the trello-timebox directory to your user or system PATH variable. If you do so properly, you should be able to simply run `timebox` or `timebox days` from any directory to run the above commmands, respectively.
+ - For maximum convenience, make timebox.py executable (follow OS-specific docs instructions) and add the trello-timebox directory to your user or system PATH variable. If you do so properly, you should be able to simply run `timebox` or `timebox days` from any directory to run the above commmands, respectively. Simplifying this process will be a primary focus in future work on distribution, along with time estimate field setup.
+
+____
 
 Planned future features include:
 - Get work hours from Google Calendar
