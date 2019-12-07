@@ -49,7 +49,7 @@ def print_cards(tasks):
     for i in range(len(tasks)):
         print(tasks[i]['name'])
         due_date = datetime.strptime(tasks[i]['due'], '%Y-%m-%dT%H:%M:%S.%fZ')
-        print('DUE: ' + (due_date + timedelta(hours=timezone_offset)).strftime("%c"))
+        print('DUE: ' + (due_date + timedelta(hours=timezone_offset)).strftime("%a %b %#d %Y %#I:%M %p"))
         time_est = get_time_estimate(tasks[i])
         hours = time_est / 60
         if hours < 1:

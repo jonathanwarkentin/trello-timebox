@@ -25,7 +25,6 @@ ___
 ____
 
 Planned future features include:
-- Locale-specific due date display
 - Get work hours from Google Calendar
 - Automatically add Google Calendar events for each card during unfilled working hours
 
