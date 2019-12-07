@@ -1,3 +1,4 @@
+#! /usr/bin/python
 import sys
 
 import requests
@@ -86,15 +87,19 @@ def get_total_time_estimate(tasks):
 
 # CLI accessible functions
 def get_tasks_for_days(days):
+    print('Getting all tasks for next " + days + "days...')
     cards = get_cards(os.getenv('BOARD_ID'))
     incoming_cards = get_cards_for_days(cards, int(days))
     print_cards(sort_cards(incoming_cards))
+    print('For next ' + days + ' days:')
     get_total_time_estimate(incoming_cards)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2:
+    if len(sys.argv) == 3:
         globals()[sys.argv[1]](sys.argv[2])
+    elif len(sys.argv) == 2:
+        globals()[sys.argv[1]]
     else:
         cards = get_cards(os.getenv('BOARD_ID'))
         print_cards(sort_cards(cards))
