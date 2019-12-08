@@ -37,7 +37,7 @@ def get_cards(board_id):
 def sort_cards(due_cards):
     sorted_tasks = sorted(
         due_cards,
-        key=lambda card: datetime.strptime(card['due'], '%Y-%m-%dT%H:%M:%S.%fZ'), reverse=False
+        key=lambda card: datetime.strptime(card['due'], '%Y-%m-%dT%H:%M:%S.%fZ'), reverse=True
     )
     return sorted_tasks
 
